@@ -1,0 +1,4 @@
+
+
+
+java -cp ./bin fr.upem.capcha.ui.MainUi
