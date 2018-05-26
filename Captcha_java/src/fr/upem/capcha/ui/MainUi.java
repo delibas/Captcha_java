@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -21,9 +22,16 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 
+import fr.upem.capcha.images.CategoryImages;
+import fr.upem.capcha.images.Images;
+
 public class MainUi {
 	
 	private static ArrayList<URL> selectedImages = new ArrayList<URL>();
+	
+	public void start() {
+		
+	}
 	
 	public static void main(String[] args) throws IOException {
 		JFrame frame = new JFrame("Capcha"); // Création de la fenêtre principale
@@ -36,18 +44,21 @@ public class MainUi {
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Lorsque l'on ferme la fenêtre on quitte le programme.
 		 
+		Images img = new CategoryImages();
+		File file = new File("C:\\Users\\ASUS\\eclipse-workspace\\Captcha_java\\Captcha_java\\src");
+		img.getAllImages(file, ".jpg", selectedImages);
 		
 		JButton okButton = createOkButton();
 
 		
-		frame.add(createLabelImage("centre ville.jpg")); //ajouter des composants à la fenêtre
-		frame.add(createLabelImage("le havre.jpg"));
-		frame.add(createLabelImage("panneau 70.jpg"));
-		frame.add(createLabelImage("panneaubleu-carre.jpeg"));
-		frame.add(createLabelImage("parking.jpg"));
-		frame.add(createLabelImage("route panneau.jpg"));
-		frame.add(createLabelImage("tour eiffel.jpg"));
-		frame.add(createLabelImage("ville espace verts.jpg"));
+//		frame.add(createLabelImage("centre ville.jpg")); //ajouter des composants à la fenêtre
+//		frame.add(createLabelImage("le havre.jpg"));
+//		frame.add(createLabelImage("panneau 70.jpg"));
+//		frame.add(createLabelImage("panneaubleu-carre.jpeg"));
+//		frame.add(createLabelImage("parking.jpg"));
+//		frame.add(createLabelImage("route panneau.jpg"));
+//		frame.add(createLabelImage("tour eiffel.jpg"));
+//		frame.add(createLabelImage("ville espace verts.jpg"));
 		frame.add(createLabelImage("voie pieton.jpg"));
 		
 		
@@ -84,7 +95,7 @@ public class MainUi {
 	private static JLabel createLabelImage(String imageLocation) throws IOException{
 		
 		final URL url = MainUi.class.getResource(imageLocation); //Aller chercher les images !! IMPORTANT 
-		
+		System.out.println(MainUi.class);
 		System.out.println(url); 
 		
 		BufferedImage img = ImageIO.read(url); //lire l'image
