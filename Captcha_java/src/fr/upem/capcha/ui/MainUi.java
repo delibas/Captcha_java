@@ -1,3 +1,8 @@
+
+/**
+* author : Élana Délio, Blactot Marc
+*/
+
 package fr.upem.capcha.ui;
 
 import java.awt.Color;
@@ -32,6 +37,7 @@ public class MainUi {
 	
 	private static ArrayList<URL> selectedImages = new ArrayList<URL>();
 	
+//	choisi la bonne instruction à afficher
 	public static String question(String category) {
 		String question = new String();
 		switch(category) {
@@ -111,9 +117,9 @@ public class MainUi {
 		});
 	}
 	
-	private static JLabel createLabelImage(URL urlParam) throws IOException{
+	private static JLabel createLabelImage(URL my_url) throws IOException{
 		
-		final URL url = urlParam; //Aller chercher les images !! IMPORTANT 
+		final URL url = my_url; //Aller chercher les images !! IMPORTANT 
 //		System.out.println(MainUi.class);
 		System.out.println(url); 
 		

@@ -1,3 +1,8 @@
+
+/**
+* author : Élana Délio, Blactot Marc
+*/
+
 package fr.upem.capcha.images;
 
 import java.io.File;
@@ -12,6 +17,7 @@ import fr.upem.capcha.ui.MainUi;
 public class CategoryImages implements Images {
 	private ArrayList<URL> imagesURL = new ArrayList<URL>();
 	
+// 	Récupère tous les fichiers avec l'extension .jpg
 	public void getFiles(File dir, String extension) {
 		File[] files = dir.listFiles();
 		for (File file : files) {
@@ -20,6 +26,7 @@ public class CategoryImages implements Images {
 			} else {
 //				if (file.getName().endsWith(extension) || file.getName().endsWith(".jpeg")) {
 				if (file.getName().endsWith(extension)) {
+//					Crée une url pour chaque file grâce à son nom de dossier parent, identique à sa classe
 					switch(file.getParentFile().getName()) {
 						case "panneaux":
 							this.imagesURL.add(Panneaux.class.getResource(file.getName()));
@@ -40,22 +47,21 @@ public class CategoryImages implements Images {
 			}
 		}
 	}
-	
+//	Retourne l'ArrayList<URL>	
 	public ArrayList<URL> getPhotos() {
 		File dir = new File("C:\\Users\\ASUS\\eclipse-workspace\\Captcha_java\\Captcha_java\\src");
 		getFiles(dir, ".jpg");
-//		System.out.println(imagesURL);
 		return this.imagesURL;
 	};
-//	
-//	public ArrayList<URL> getRandomPhotosURL(int nbOfPhotos) {
-//		
-//	}
-//	
-//	public ArrayList<URL> getRandomPhotoURL() {
-//		
-//	}
-//	
+/*	
+*	public ArrayList<URL> getRandomPhotosURL(int nbOfPhotos) {
+*		
+*	}
+*	
+*	public ArrayList<URL> getRandomPhotoURL() {
+*		
+*	}
+*/	
 	public boolean isPhotoCorrect(ArrayList<URL> selectedImages) {
 		for(URL url: selectedImages) {
 			if(url.getClass().equals((Panneaux.class)));

@@ -1,3 +1,8 @@
+
+/**
+* author : Élana Délio, Blactot Marc
+*/
+
 package fr.upem.capcha.images;
 
 import java.io.File;

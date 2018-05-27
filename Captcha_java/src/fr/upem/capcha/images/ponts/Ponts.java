@@ -1,5 +1,12 @@
+
+/**
+* author : Élana Délio, Blactot Marc
+*/
+
 package fr.upem.capcha.images.ponts;
 
-public class Ponts {
+import fr.upem.capcha.images.CategoryImages;
+
+public class Ponts extends CategoryImages {
 
 }
