@@ -24,34 +24,53 @@ import javax.swing.JTextArea;
 
 import fr.upem.capcha.images.CategoryImages;
 import fr.upem.capcha.images.Images;
+import fr.upem.capcha.images.panneaux.Panneaux;
+import fr.upem.capcha.images.ponts.Ponts;
+import fr.upem.capcha.images.villes.Villes;
 
 public class MainUi {
 	
 	private static ArrayList<URL> selectedImages = new ArrayList<URL>();
 	
-	public void start() {
-		
+	public static String question(String category) {
+		String question = new String();
+		switch(category) {
+			case "panneaux":
+				question = "qui affichent un panneaux";
+				break;
+			case "villes":
+				question = "qui représentent une ville";
+				break;
+			case "ponts":
+				question = "qui affichent un pont";
+				break;
+			default:
+			break;
+		}
+		return question;
 	}
 	
 	public static void main(String[] args) throws IOException {
-		JFrame frame = new JFrame("Capcha"); // CrÃ©ation de la fenÃªtre principale
+		JFrame frame = new JFrame("Capcha"); // Création de la fenÃªtre principale
 		
-		GridLayout layout = createLayout();  // CrÃ©ation d'un layout de type Grille avec 4 lignes et 3 colonnes
+		GridLayout layout = createLayout();  // Création d'un layout de type Grille avec 4 lignes et 3 colonnes
 		
 		frame.setLayout(layout);  // affection du layout dans la fenÃªtre.
-		frame.setSize(1024, 768); // dÃ©finition de la taille
-		frame.setResizable(false);  // On dÃ©finit la fenÃªtre comme non redimentionnable
+		frame.setSize(1024, 768); // définition de la taille
+		frame.setResizable(false);  // On définit la fenêtre comme non redimentionnable
 		
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Lorsque l'on ferme la fenÃªtre on quitte le programme.
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Lorsque l'on ferme la fenêtre on quitte le programme.
 		 
-		Images img = new CategoryImages();
-		File file = new File("C:\\Users\\ASUS\\eclipse-workspace\\Captcha_java\\Captcha_java\\src");
-		img.getAllImages(file, ".jpg", selectedImages);
+		CategoryImages CatIm = new CategoryImages();
+		ArrayList<URL> imagesURL = CatIm.getPhotos();
+//		System.out.println(selectedImages);
 		
 		JButton okButton = createOkButton();
 
-		
-//		frame.add(createLabelImage("centre ville.jpg")); //ajouter des composants Ã  la fenÃªtre
+		for(URL my_url: imagesURL) {
+			frame.add(createLabelImage(my_url));
+		}
+//		frame.add(createLabelImage("centre ville.jpg")); //ajouter des composants à  la fenêtre
 //		frame.add(createLabelImage("le havre.jpg"));
 //		frame.add(createLabelImage("panneau 70.jpg"));
 //		frame.add(createLabelImage("panneaubleu-carre.jpeg"));
@@ -59,11 +78,11 @@ public class MainUi {
 //		frame.add(createLabelImage("route panneau.jpg"));
 //		frame.add(createLabelImage("tour eiffel.jpg"));
 //		frame.add(createLabelImage("ville espace verts.jpg"));
-		frame.add(createLabelImage("voie pieton.jpg"));
+//		frame.add(createLabelImage("voie pieton.jpg"));
 		
+		String question = question("panneaux");
 		
-		
-		frame.add(new JTextArea("Cliquez n'importe oÃ¹ ... juste pour tester l'interface !"));
+		frame.add(new JTextArea("Sélectionnez toutes les images " + question));
 		
 		
 		frame.add(okButton);
@@ -77,33 +96,33 @@ public class MainUi {
 	}
 	
 	private static JButton createOkButton(){
-		return new JButton(new AbstractAction("VÃ©rifier") { //ajouter l'action du bouton
+		return new JButton(new AbstractAction("Vérifier") { //ajouter l'action du bouton
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				EventQueue.invokeLater(new Runnable() { // faire des choses dans l'interface donc appeler cela dans la queue des Ã©vÃ¨nements
+				EventQueue.invokeLater(new Runnable() { // faire des choses dans l'interface donc appeler cela dans la queue des événements
 					
 					@Override
 					public void run() { // c'est un runnable
-						System.out.println("J'ai cliquÃ© sur Ok");
+						System.out.println("J'ai cliqué sur Ok");
 					}
 				});
 			}
 		});
 	}
 	
-	private static JLabel createLabelImage(String imageLocation) throws IOException{
+	private static JLabel createLabelImage(URL urlParam) throws IOException{
 		
-		final URL url = MainUi.class.getResource(imageLocation); //Aller chercher les images !! IMPORTANT 
-		System.out.println(MainUi.class);
+		final URL url = urlParam; //Aller chercher les images !! IMPORTANT 
+//		System.out.println(MainUi.class);
 		System.out.println(url); 
 		
 		BufferedImage img = ImageIO.read(url); //lire l'image
 		Image sImage = img.getScaledInstance(1024/3,768/4, Image.SCALE_SMOOTH); //redimentionner l'image
 		
-		final JLabel label = new JLabel(new ImageIcon(sImage)); // crÃ©er le composant pour ajouter l'image dans la fenÃªtre
+		final JLabel label = new JLabel(new ImageIcon(sImage)); // créer le composant pour ajouter l'image dans la fenêtre
 		
-		label.addMouseListener(new MouseListener() { //Ajouter le listener d'Ã©venement de souris
+		label.addMouseListener(new MouseListener() { //Ajouter le listener d'événement de souris
 			private boolean isSelected = false;
 			
 			
@@ -127,7 +146,7 @@ public class MainUi {
 			}
 			
 			@Override
-			public void mouseClicked(MouseEvent arg0) { //ce qui nous intÃ©resse c'est lorsqu'on clique sur une image, il y a donc des choses Ã  faire ici
+			public void mouseClicked(MouseEvent arg0) { //ce qui nous intéresse c'est lorsqu'on clique sur une image, il y a donc des choses à  faire ici
 				EventQueue.invokeLater(new Runnable() { 
 					
 					@Override
@@ -136,6 +155,7 @@ public class MainUi {
 							label.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
 							isSelected = true;
 							selectedImages.add(url);
+							
 						}
 						else {
 							label.setBorder(BorderFactory.createEmptyBorder());

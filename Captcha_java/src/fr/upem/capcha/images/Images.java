@@ -6,10 +6,10 @@ import java.util.ArrayList;
 
 public interface Images {
 
-	public void getAllImages(File dir, String extension, ArrayList<URL> imagesURL);
+	public void getFiles(File dir, String extension);
 	public ArrayList<URL> getPhotos();
 //	public ArrayList<URL> getRandomPhotosURL(int nbOfPhotos);
 //	public ArrayList<URL> getRandomPhotoURL();
-//	public boolean isPhotoCorrect();
+	public boolean isPhotoCorrect(ArrayList<URL> selectedImages);
 	public void setImagesURL(ArrayList<URL> imagesUrl);
 }
